@@ -9,3 +9,7 @@ isl_blog_lire:
 isl_blog_ajouter:
     path: /blog/ajouter
     defaults: { _controller: ISLBlogBundle:Blog:ajouter }
+
+isl_blog_test_complexe:
+    path: /blog/{annee}/{mois}/{categorie}.{format}
+    defaults: { _controller: ISLBlogBundle:Blog:testComplexe }

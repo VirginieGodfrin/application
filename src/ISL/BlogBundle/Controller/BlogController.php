@@ -23,4 +23,16 @@ class BlogController extends Controller{
         return new Response('<body>Article '.$id.'</body>');
     }
     
+    public function testComplexeAction($mois, $annee, $categorie, $format){
+        $content = '<body>';
+        $content .= '<h1>Articles de '.$mois.'/'.$annee.'</h1>';
+        $content .= '<p>';
+        $content .= 'Contenu de la catégorie <b>'.$categorie.'</b>';
+        $content .= ' au format '.$format;
+        $content .= '</p>';
+        $content .= '</body>';
+        
+        return new Response($content);
+    }
+    
 }
