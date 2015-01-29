@@ -24,15 +24,13 @@ class BlogController extends Controller{
     }
     
     public function testComplexeAction($mois, $annee, $categorie, $_format){
-        $content = '<body>';
-        $content .= '<h1>Articles de '.$mois.'/'.$annee.'</h1>';
-        $content .= '<p>';
-        $content .= 'Contenu de la catégorie <b>'.$categorie.'</b>';
-        $content .= ' au format '.$_format;
-        $content .= '</p>';
-        $content .= '</body>';
         
-        return new Response($content);
+       return $this->render('ISLBlogBundle:Blog:testComplexe.html.twig', array(
+           'mois' => $mois,
+           "annee" => $annee,
+           'categorie' => $categorie,
+           '_format' =>$_format
+       )); 
     }
     
 }
