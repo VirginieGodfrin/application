@@ -12,4 +12,8 @@ isl_blog_ajouter:
 
 isl_blog_test_complexe:
     path: /blog/{annee}/{mois}/{categorie}.{format}
-    defaults: { _controller: ISLBlogBundle:Blog:testComplexe }
+    defaults: { _controller: ISLBlogBundle:Blog:testComplexe, format: html }
+    requirements:
+        annee: \d{4}
+        mois: \d{1,2}
+        format: xml | rss | html
