@@ -28,7 +28,7 @@ class BlogController extends Controller{
         $content .= '<h1>Articles de '.$mois.'/'.$annee.'</h1>';
         $content .= '<p>';
         $content .= 'Contenu de la catégorie <b>'.$categorie.'</b>';
-        $content .= ' au format '.$format;
+        $content .= ' au format '.$_format;
         $content .= '</p>';
         $content .= '</body>';
         
