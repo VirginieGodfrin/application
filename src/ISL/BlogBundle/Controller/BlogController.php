@@ -9,6 +9,7 @@
 namespace ISL\BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 
 /**
@@ -18,9 +19,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class BlogController extends Controller{
     
-    public function helloAction(){
-        return $this->render('ISLBlogBundle:Blog:hello.html.twig');
+    public function lireAction($id){
+        return new Response('<body>Article '.$id.'</body>');
     }
-    
     
 }

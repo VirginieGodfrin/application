@@ -1,6 +1,11 @@
-isl_blog_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: ISLBlogBundle:Default:index }
-isl_blog_hello_world:
-    path:   /hello-world
-    defaults: { _controller: ISLBlogBundle:Blog:hello }
+isl_blog_index:
+    path: /blog
+    defaults: { _controller: ISLBlogBundle:Blog:index }
+
+isl_blog_lire:
+    path: /blog/article/{id}
+    defaults: { _controller: ISLBlogBundle:Blog:lire }
+       
+isl_blog_ajouter:
+    path: /blog/ajouter
+    defaults: { _controller: ISLBlogBundle:Blog:ajouter }
