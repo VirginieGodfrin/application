@@ -1,0 +1,4 @@
+services:
+#    isl_blog.example:
+#        class: ISL\BlogBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
