@@ -10,6 +10,7 @@ namespace ISL\BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 
 /**
@@ -19,9 +20,23 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class BlogController extends Controller{
     
+    public function indexAction($page=''){
+        
+    }
+    
     public function voirAction($id){
         return new Response('<body>Article '.$id.'</body>');
     }
-   
     
+    public function ajouterAction(){
+        
+    }
+    
+    public function modifierAction($id){
+        
+    }
+   
+    public function supprimerAction($id){
+        
+    }
 }
