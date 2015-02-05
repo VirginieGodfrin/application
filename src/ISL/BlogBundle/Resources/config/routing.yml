@@ -1,19 +1,35 @@
 isl_blog_index:
-    path: /blog
-    defaults: { _controller: ISLBlogBundle:Blog:index }
-
-isl_blog_lire:
-    path: /blog/article/{id}
-    defaults: { _controller: ISLBlogBundle:Blog:lire }
-       
-isl_blog_ajouter:
-    path: /blog/ajouter
-    defaults: { _controller: ISLBlogBundle:Blog:ajouter }
-
-isl_blog_test_complexe:
-    path: /blog/{annee}/{mois}/{categorie}.{format}
-    defaults: { _controller: ISLBlogBundle:Blog:testComplexe, _format: html }
+    path: /{page}
+    defaults: { _controller: ISLBlogBundle:Blog:index, page: 1 }
     requirements:
-        annee: \d{4}
-        mois: \d{1,2}
-        _format: xml | rss | html
+        id: \d*
+
+isl_blog_voir:
+    path: /article/{id}
+    defaults: { _controller: ISLBlogBundle:Blog:voir }
+    requirements:
+        id: \d+
+
+isl_blog_modifier:
+    path: /modifier/{id}
+    defaults: { _controller: ISLBlogBundle:Blog:modifer }
+    requirements:
+        id: \d+
+
+isl_blog_ajouter:
+    path: /ajouter
+    defaults: { _controller: ISLBlogBundle:Blog:ajouter }
+    
+isl_blog_supprimer:
+    path: /supprimer/{id}
+    defaults: { _controller: ISLBlogBundle:Blog:supprimer }
+    requirements:
+        id: \d+
+
+#isl_blog_test_complexe:
+#    path: /blog/{annee}/{mois}/{categorie}.{format}
+#    defaults: { _controller: ISLBlogBundle:Blog:testComplexe, _format: html }
+#    requirements:
+#        annee: \d{4}
+#        mois: \d{1,2}
+#        _format: xml | rss | html

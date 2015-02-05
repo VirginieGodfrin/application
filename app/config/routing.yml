@@ -1,4 +1,4 @@
 # la configuration du routing sera importée depuis le bundle
 isl_blog:
     resource: "@ISLBlogBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /blog

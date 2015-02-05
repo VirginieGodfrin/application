@@ -19,18 +19,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class BlogController extends Controller{
     
-    public function lireAction($id){
+    public function voirAction($id){
         return new Response('<body>Article '.$id.'</body>');
     }
-    
-    public function testComplexeAction($mois, $annee, $categorie, $_format){
-        
-       return $this->render('ISLBlogBundle:Blog:testComplexe.html.twig', array(
-           'mois' => $mois,
-           "annee" => $annee,
-           'categorie' => $categorie,
-           '_format' =>$_format
-       )); 
-    }
+   
     
 }
