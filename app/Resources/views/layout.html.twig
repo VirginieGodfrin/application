@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block titre %}ISL Blog{% endblock %}</title>
+        
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        <header>
+            <h1>Titre global</h1>
+        </header>
+        {% block contenu %}
+            contenu par défaut
+        {% endblock %}
+        
+    </body>
+</html>

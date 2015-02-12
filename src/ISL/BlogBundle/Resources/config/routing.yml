@@ -12,7 +12,7 @@ isl_blog_voir:
 
 isl_blog_modifier:
     path: /modifier/{id}
-    defaults: { _controller: ISLBlogBundle:Blog:modifer }
+    defaults: { _controller: ISLBlogBundle:Blog:modifier }
     requirements:
         id: \d+
 

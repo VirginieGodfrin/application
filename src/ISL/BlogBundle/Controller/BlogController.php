@@ -43,18 +43,15 @@ class BlogController extends Controller{
     
     public function ajouterAction(Request $req){
        
-        $this->get('session')->getFlashBag()
-                ->add('error', 'Une erreur est survenue');
-        
-        $url = $this->generateUrl('isl_blog_index');
-        return $this->redirect($url);
-        
+      
+       
+        return $this->render('ISLBlogBundle:Blog:ajouter.html.twig');
         
         
     }
     
-    public function modifierAction($id){
-        
+    public function modifierAction($id, Request $req){
+        return $this->render('ISLBlogBundle:Blog:modifier.html.twig');
     }
    
     public function supprimerAction($id){

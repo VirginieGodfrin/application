@@ -1,13 +1,14 @@
-{#{% extends "ISLBlogBundle::layout.html.twig" %}#}
-<!doctype html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>{% block titre %}ISL Blog{% endblock %}</title>
-    </head>
-    <body>
-        {% block contenu %}
-            Contenu par défaut
-        {% endblock %}
-    </body>
-</html>
+{% extends '::layout.html.twig' %}
+
+
+{% block titre %}
+    {{ parent() }} - Hello
+{% endblock %}
+
+{% block soustitre %}
+    <h2>Sous titre</h2>
+{% endblock %}
+
+{% block contenu %}
+    Mon second layout
+{% endblock %}
