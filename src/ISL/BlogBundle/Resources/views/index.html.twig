@@ -1,0 +1,14 @@
+{% extends 'ISLBlogBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/islblog/css/main.css') }}" >
+{% endblock %}
+{% block title %}
+    Bienvenue sur le Blog
+ {% endblock %}
+ 
+ {% block contenu %}
+     <div class="last">
+     {{ render(controller('ISLBlogBundle:Blog:derniersArticles')) }}
+     </div>
+ {% endblock %}

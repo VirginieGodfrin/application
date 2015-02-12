@@ -22,19 +22,7 @@ class BlogController extends Controller{
     
     public function indexAction($page=''){
         
-        $name = $this->get('session')->get('name');
-        
-        
-        return $this->render(
-          'ISLBlogBundle:Blog:test.html.twig',      
-          array(
-              'page' => 2,
-              'objet' => array('nom'=>'Berger', 'prenom'=>'Gregory', 'Age'=>34),
-              'html' => '<div>Hello world i\'m in a div</div>',
-              'monArray' => array(1,32,43,12),
-              'exercice' => array('Nom'=>'Berger', 'Prenom'=>'Gregory', 'Age'=>34, 'Ville'=>'Liège'),
-          )
-        );
+        return $this->render('ISLBlogBundle::index.html.twig');
     }
     
     public function voirAction($id){
@@ -56,5 +44,11 @@ class BlogController extends Controller{
    
     public function supprimerAction($id){
         
+    }
+    
+    public function derniersArticlesAction($qty=3){
+        $articles = array(array('titre'=>'Article 1'),array('titre'=>'Article 2'),array('titre'=>'Article 3'),array('titre'=>'Article 4'));
+        
+        return $this->render('ISLBlogBundle:_partials:derniersArticles.html.twig',array('articles'=>$articles));
     }
 }

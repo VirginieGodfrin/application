@@ -5,13 +5,20 @@
         <title>{% block titre %}ISL Blog{% endblock %}</title>
         
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        {% block stylesheets %}
+        {%endblock %}
     </head>
     <body>
+        {% block header %}
         <header>
             <h1>Titre global</h1>
         </header>
+        {% endblock %}
         {% block contenu %}
             contenu par défaut
+        {% endblock %}
+        {% block footer %}
+            <footer>footer</footer>
         {% endblock %}
         
     </body>
