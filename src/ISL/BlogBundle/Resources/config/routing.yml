@@ -2,7 +2,7 @@ isl_blog_index:
     path: /{page}
     defaults: { _controller: ISLBlogBundle:Blog:index, page: 1 }
     requirements:
-        id: \d*
+        page: \d*
 
 isl_blog_voir:
     path: /article/{id}

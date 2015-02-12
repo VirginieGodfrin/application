@@ -1,0 +1,56 @@
+<body>
+    {#
+    {% for error in app.session.flashbag.get('error') %}
+        <p style="color:'#FF00000';">{{ error }}</p>
+    {% endfor %}
+    
+    <h1>Hello {{ "Monsieur " ~ objet.nom }} !</h1>
+    
+    <h2>Les filtres</h2>
+    <h3>Hello {{ objet['nom'] | upper }}</h3>
+    <h3>Hello {{ objet['nom'] | lower }}</h3>
+    <h3>Hello {{ objet['nom'] | title }}</h3>
+    <h3>Hello {{ objet['nom'] | capitalize }}</h3>
+    <h3>Hello {{ objet['nom'] | length }}</h3>
+    <h3>Strip Tag {{ "<h1>Hello</h1>" | striptags}}</h3>
+    <h3>{{ objet.nom | slice(0,3) }}</h3>
+    <h1>{{ 'Hello %2.3f' | format(0.12345) }} !</h1>
+    <h1>{{ "Hello %s" | format(objet.nom) }} !</h1>
+    
+    <p>{{ 'today + 10days+6 hours' | date('d-m-Y H:i:s') }}</p>
+    
+    <p>{{ html | raw }}</p>
+    #}
+    {#<p>{{ app.request }}</p>#}
+    
+    <p>Version : {{ version }}</p>
+    
+    <p>
+        {% if objet is iterable %}
+        <ul>
+            {% for  key, val in objet %}
+                <li>{{key}}: {{ val }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+            {{ objet }}
+        {% endif %}
+        
+    </p>
+    
+    <table>
+        {% for k,v in exercice %}
+            {% if loop.first %}
+                <thead><tr><td>Index</td><td>Clé</td><td>Valeur</td><td>remaining</td></tr></thead>
+            {% endif %}
+            {% if loop.index is odd %}
+                {% set css_class = 'impair' %}
+            {% else %}
+                {% set css_class = 'pair' %}
+            {% endif %}
+            <tr class="{{css_class}}"><td>{{loop.index}}</td><td>{{k}}</td><td>{{v}}</td><td>{{loop.revindex}}</td></tr>
+        {% endfor %}
+    </table>
+    
+    
+</body>
