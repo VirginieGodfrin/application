@@ -1,4 +1,9 @@
 services:
-#    isl_blog.example:
-#        class: ISL\BlogBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    isl_blog.antimotsinterdits:
+        class: ISL\BlogBundle\Services\AntiMotsInterdits
+           
+    article_repository:
+        class: ISL\BlogBundle\Entity\ArticleRepository
+        arguments: [ISL\BlogBundle\Entity\Article]
+        factory_service: doctrine
+        factory_method: getRepository

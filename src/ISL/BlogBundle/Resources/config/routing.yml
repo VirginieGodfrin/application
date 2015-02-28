@@ -25,6 +25,10 @@ isl_blog_supprimer:
     defaults: { _controller: ISLBlogBundle:Blog:supprimer }
     requirements:
         id: \d+
+        
+isl_blog_test:
+    path: /test
+    defaults: { _controller: ISLBlogBundle:Blog:test }
 
 #isl_blog_test_complexe:
 #    path: /blog/{annee}/{mois}/{categorie}.{format}

@@ -9,6 +9,14 @@
  
  {% block contenu %}
      <div class="last">
-     {{ render(controller('ISLBlogBundle:Blog:derniersArticles')) }}
+     {# render(controller('ISLBlogBundle:Blog:derniersArticles')) #}
      </div>
+     <ul>
+    {% for article in articles %}
+        <li><h3>{{ article.titre }}</h3>
+            <a href="{{ path('isl_blog_voir',{id:article.id} }}">Lire</a>
+        </li>
+    {% endfor %}
+    </ul>
+
  {% endblock %}
