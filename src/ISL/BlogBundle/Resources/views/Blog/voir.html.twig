@@ -1,0 +1,16 @@
+{% extends 'ISLBlogBundle::layout.html.twig' %}
+
+{% block contenu %}
+    <article>
+        <h1>{{ article.titre }}</h1>
+        <h3> Par {{ article.auteur}}, le {{ article.date | date('d/m/Y') }}</h3>
+        {% if article.image %}
+            <p>
+                <image src="{{ article.image.url }}" alt="{{ article.image.alt }}" />
+            <p>
+        {% endif %}
+        <p class="">{{ article.contenu }}</p>
+        
+    </article>
+        
+{% endblock %} 

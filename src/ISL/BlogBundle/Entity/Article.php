@@ -3,6 +3,7 @@
 namespace ISL\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Article
@@ -17,6 +18,8 @@ class Article
     public function __construct() {
         $this->date = new \DateTime();
         $this->publication = true;
+        $this->categories = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
     }
     /**
      * @var integer
@@ -62,6 +65,29 @@ class Article
      * @ORM\Column(name="publication", type="boolean")
      */
     private $publication;
+    
+    /**
+     *
+     * @var type String
+     * @ORM\OneToOne(targetEntity="Image", cascade={"persist"})
+     *  
+     */
+    private $image;
+    
+    /**
+     *
+     * @var ArrayCollection
+     * @ORM\ManyToMany(targetEntity="Categorie", cascade={"persist"})
+     */
+    private $categories;
+    
+    
+    /**
+     *
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Commentaire", mappedBy="article")
+     */
+    private $commentaires;
 
 
     /**
@@ -173,6 +199,53 @@ class Article
     function setPublication(type $publication) {
         $this->publication = $publication;
     }
+    
+    function getImage() {
+        return $this->image;
+    }
+
+    function setImage(Image $image) {
+        $this->image = $image;
+    }
+
+    function getCategories() {
+        return $this->categories;
+    }
+
+    function setCategories(ArrayCollection $categories) {
+        $this->categories = $categories;
+    }
+
+    public function addCategorie(Categorie $cat){
+        if(! $this->categories->contains($cat)){
+            $this->categories->add($cat);
+        }
+        
+    }
+    
+    public function removeCategorie(Categorie $cat){
+        if($this->categories->contains($cat)){
+            $this->categories->removeElement($cat);
+        }
+    }
+    
+    function getCommentaires() {
+        return $this->commentaires;
+    }
+
+    function setCommentaires(ArrayCollection $commentaires) {
+        $this->commentaires = $commentaires;
+    }
+
+    public function addCommentaire(Commentaire $comm){
+        $this->commentaires->add($comm);
+    }
+    
+    public function removeCommentaire(Commentaire $comm){
+        $this->commentaires->removeElement($comm);
+    }
+    
+
 
 
 }

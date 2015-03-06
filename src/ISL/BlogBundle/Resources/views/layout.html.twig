@@ -1,11 +1,29 @@
 {% extends '::layout.html.twig' %}
 
+{% block stylesheets %}
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/islblog/css/main.css') }}" >
+    
+{% endblock %}
+
+{% block scripts %}
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+{% endblock %}
 
 {% block titre %}
     {{ parent() }} - Hello
 {% endblock %}
 
-
+{% block container %}
+    
 {% block contenu %}
     Mon second layout
+{% endblock %}
+    
 {% endblock %}

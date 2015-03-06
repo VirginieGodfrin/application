@@ -1,5 +1,11 @@
-<ul>
+<ul class="media-list">
     {% for article in articles %}
-        <li><h3>{{ article.titre }}</h3></li>
+        <li class="media">
+            
+            <div class="media-body">
+                <h3 class="media-heading"><a href="{{ path('isl_blog_voir', {id:article.id}) }}">{{ article.titre }}</a></h3>
+                
+            </div>
+        </li>
     {% endfor %}
 </ul>

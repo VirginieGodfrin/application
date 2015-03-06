@@ -9,17 +9,18 @@
         {%endblock %}
     </head>
     <body>
-        {% block header %}
-        <header>
-            <h1>Titre global</h1>
-        </header>
-        {% endblock %}
-        {% block contenu %}
-            contenu par défaut
-        {% endblock %}
-        {% block footer %}
-            <footer>footer</footer>
-        {% endblock %}
-        
+        <div class="container">
+            {% block header %}
+            <header class="page-header">
+                <h1>Le blog de l'ISL</h1>
+            </header>
+            {% endblock %}
+            {% block contenu %}
+                contenu par défaut
+            {% endblock %}
+            {% block footer %}
+                <footer>footer</footer>
+            {% endblock %}
+        </div>
     </body>
 </html>

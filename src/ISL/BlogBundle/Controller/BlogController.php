@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use ISL\BlogBundle\Entity\Article;
+use ISL\BlogBundle\Entity\Commentaire;
 
 
 /**
@@ -35,19 +36,39 @@ class BlogController extends Controller{
     }
     
     public function voirAction($id){
-        return new Response('<body>Article '.$id.'</body>');
+        $repo = $this->getDoctrine()->getManager()->getRepository('ISLBlogBundle:Article');
+        $article =  $repo->find($id);
+        if($article==null){
+            throw $this->createNotFoundException("Pas d'article trouvé pour l'id ".$id);
+        }
+        return $this->render('ISLBlogBundle:Blog:voir.html.twig', 
+                    array('article' => $article)
+                );
     }
     
     public function ajouterAction(Request $req){
        
       
        $article = new Article();
-       $article->setAuteur('Berger');
-       $article->setTitre('Mon premier article');
-       $article->setContenu('Lorem ipsum dolor sit amet etc');
-       $em = $this->getDoctrine()->getManager();
-       $em->persist($article);
-       $em->flush();
+        $article->setAuteur('Greg Berger');
+        $article->setTitre('Article sur les compétences');
+        $article->setContenu('Cet article nous a permis de tester l\'ajout de catégories');
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($article);
+        $em->flush();
+        $repo = $em->getRepository('ISLBlogBundle:Competence');
+        $competences = $repo->findAll();
+        foreach ($competences as $comp) {
+            //$article->addCategorie($categorie);
+            $compArt = new \ISL\BlogBundle\Entity\ArticleCompetence();
+            $compArt->setArticle($article);
+            $compArt->setCompetence($comp);
+            $compArt->setNiveau('expert absolu');
+            $em->persist($compArt);
+            
+        }        
+        
+        $em->flush();
         return $this->render('ISLBlogBundle:Blog:ajouter.html.twig');
         
         
@@ -62,18 +83,21 @@ class BlogController extends Controller{
     }
     
     public function derniersArticlesAction($qty=3){
-        $articles = array(array('titre'=>'Article 1'),array('titre'=>'Article 2'),array('titre'=>'Article 3'),array('titre'=>'Article 4'));
+        $articles = $this->getDoctrine()->getManager()->getRepository('ISLBlogBundle:Article')->findBy(array(), null, $qty, 0);
         
         return $this->render('ISLBlogBundle:_partials:derniersArticles.html.twig',array('articles'=>$articles));
     }
     
     public function testAction(){
-        $mots_interdits = $this->get('isl_blog.antimotsinterdits');
-        $compteur = $mots_interdits->combienDeMotsInvalides("terroriste nazi nul!");
-        if($compteur > 0){
-            throw new \Exception("Trop de mots interdits");
-            
+        $em = $this->getDoctrine()->getManager();
+        $categories  = array('analyse', 'développement', 'testing', 'administration système', 'divers');
+        foreach($categories as $cat)
+        {
+            $comp = new \ISL\BlogBundle\Entity\Competence();
+            $comp->setNom($cat);
+            $em->persist($comp);
         }
-        return $this->render("ISLBlogBundle::index.html.twig");
+        $em->flush();
+        return new Response();
     }
 }

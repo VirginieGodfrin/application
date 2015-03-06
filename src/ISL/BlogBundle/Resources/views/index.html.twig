@@ -1,22 +1,46 @@
 {% extends 'ISLBlogBundle::layout.html.twig' %}
+   
 
-{% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/islblog/css/main.css') }}" >
-{% endblock %}
 {% block title %}
     Bienvenue sur le Blog
  {% endblock %}
  
  {% block contenu %}
-     <div class="last">
-     {# render(controller('ISLBlogBundle:Blog:derniersArticles')) #}
-     </div>
-     <ul>
-    {% for article in articles %}
-        <li><h3>{{ article.titre }}</h3>
-            <a href="{{ path('isl_blog_voir',{id:article.id} }}">Lire</a>
-        </li>
-    {% endfor %}
-    </ul>
+     
+     <div class="row">
+         
+        <div class="col-md-6">
+            <h2>Tous les articles</h2>
+            <ul>
+            {% for article in articles %}
+                <li class="media">
+                    {% if article.image %}
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object" src="{{ article.image.url }}" alt="{{ article.image.url }}" width="64px" />
+                        </a>
+                    </div>
+                    {% endif %}
+                    <div class="media-body">
+                        <h3 class="media-heading"><a href="{{ path('isl_blog_voir', {id:article.id}) }}">{{ article.titre }}</a></h3>
+                        <p>Auteur {{ article.auteur }}</p>
+                        {% if article.categories %}
+                            {% for cat in article.categories %}
+                                <span class="label label-info">{{ cat.nom }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </li>
+            {% endfor %}
+           </ul>
+       </div>
+        <div class="col-md-6">
+         <div class="last">
+             <h2>Les derniers articles</h2>
+            {% render(controller('ISLBlogBundle:Blog:derniersArticles')) %}
+         </div>
+      </div>
 
+    </div>
+     
  {% endblock %}
