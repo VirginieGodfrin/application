@@ -239,6 +239,8 @@ class Article
 
     public function addCommentaire(Commentaire $comm){
         $this->commentaires->add($comm);
+        $comm->setArticle($this);
+        return $this;
     }
     
     public function removeCommentaire(Commentaire $comm){
