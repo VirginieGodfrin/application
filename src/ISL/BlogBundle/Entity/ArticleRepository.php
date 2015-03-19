@@ -77,4 +77,15 @@ class ArticleRepository extends EntityRepository
         $qb = $this->whereAnneeEnCours($qb);
         return $qb->getQuery()->getResult();
     }
+    
+    public function selectByMotCleSurTitre($mot_cle){
+        $qb = $this->createQueryBuilder('a');
+        
+        $qb->where($qb->expr()->like('a.titre', ':mot_cle'));
+        $qb->setParameter('mot_cle', '%'.$mot_cle.'%');
+        
+        // filtrer par annee en cours
+        // $qb = $this->whereAnneeEnCours($qb);
+        return $qb->getQuery()->getResult();
+    }
 }
