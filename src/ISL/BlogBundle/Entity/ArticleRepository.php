@@ -88,4 +88,18 @@ class ArticleRepository extends EntityRepository
         // $qb = $this->whereAnneeEnCours($qb);
         return $qb->getQuery()->getResult();
     }
+    
+    
+    public function selectByAuthorOrTitreDQL($auteur, $titre){
+        
+        $dql = "SELECT a FROM ISLBlogBundle:Article a"
+                . "WHERE a.auteur = :auteur"
+                . "OR a.titre = :titre";
+                
+        $query = $this->_em->createQuery($dql);
+        $query->setParameter('auteur', $auteur);
+        $query->setParameter('titre', $titre);
+        
+        return $query->getResult();
+    }
 }
