@@ -4,6 +4,7 @@ namespace ISL\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Article
@@ -97,6 +98,14 @@ class Article
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
+    
+    /**
+     *
+     * @var type String
+     * @Gedmo\Slug(fields={"id","titre"})
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
 
 
     /**
@@ -260,15 +269,24 @@ class Article
         return $this->updatedAt;
     }
 
-    function setUpdatedAt(type $updatedAt) {
+    function setUpdatedAt(\DateTime $updatedAt) {
         $this->updatedAt = $updatedAt;
     }
 
     /**
      * @ORM\PreUpdate
+     * @ORM\PrePersist
      */
     public function refreshUpdateDate(){
         $this->setUpdatedAt(new \DateTime);
     }
 
+    
+    function getSlug() {
+        return $this->slug;
+    }
+
+    function setSlug(type $slug) {
+        $this->slug = $slug;
+    }
 }

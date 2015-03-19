@@ -4,6 +4,10 @@ isl_blog_index:
     requirements:
         page: \d*
 
+isl_lire_slug:
+    path: /article/{slug}
+    defaults: { _controller: ISLBlogBundle:Blog:lire }
+    
 isl_blog_voir:
     path: /article/{id}
     defaults: { _controller: ISLBlogBundle:Blog:voir }
@@ -29,7 +33,7 @@ isl_blog_supprimer:
 isl_blog_test:
     path: /test
     defaults: { _controller: ISLBlogBundle:Blog:test }
-
+    
 #isl_blog_test_complexe:
 #    path: /blog/{annee}/{mois}/{categorie}.{format}
 #    defaults: { _controller: ISLBlogBundle:Blog:testComplexe, _format: html }

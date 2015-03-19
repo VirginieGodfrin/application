@@ -19,6 +19,8 @@ class AppKernel extends Kernel
             
             /** notre bundle a été ajouté à appKernel par le générateur */
             new ISL\BlogBundle\ISLBlogBundle(),
+            
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

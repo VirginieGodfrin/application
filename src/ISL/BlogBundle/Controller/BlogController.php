@@ -59,13 +59,24 @@ class BlogController extends Controller{
                 );
     }
     
+    
+    public function lireAction($slug){
+        $repo = $this->getDoctrine()->getManager()->getRepository('ISLBlogBundle:Article');
+        $article = $repo->findOneBySlug($slug);
+        if($article == null){
+            throw $this->createNotFoundException('Article non trouvé');
+        }
+        return $this->render('ISLBlogBundle:Blog:voir.html.twig', 
+                array('article'=>$article));
+    }
+    
     public function ajouterAction(Request $req){
        
       
        $article = new Article();
         $article->setAuteur('Greg Berger');
-        $article->setTitre('Article sur les compétences');
-        $article->setContenu('Cet article nous a permis de tester l\'ajout de catégories');
+        $article->setTitre('Article test slug');
+        $article->setContenu("test de l'extension sluggable");
         $em = $this->getDoctrine()->getManager();
         $em->persist($article);
         $em->flush();
@@ -96,7 +107,7 @@ class BlogController extends Controller{
     }
     
     public function derniersArticlesAction($qty=3){
-        $articles = $this->getDoctrine()->getManager()->getRepository('ISLBlogBundle:Article')->findBy(array(), null, $qty, 0);
+        $articles = $this->getDoctrine()->getManager()->getRepository('ISLBlogBundle:Article')->findBy(array(), array('updatedAt'=>'DESC'), $qty, 0);
         
         return $this->render('ISLBlogBundle:_partials:derniersArticles.html.twig',array('articles'=>$articles));
     }

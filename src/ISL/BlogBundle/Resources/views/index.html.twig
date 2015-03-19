@@ -22,7 +22,7 @@
                     </div>
                     {% endif %}
                     <div class="media-body">
-                        <h3 class="media-heading"><a href="{{ path('isl_blog_voir', {id:article.id}) }}">{{ article.titre }}</a></h3>
+                        <h3 class="media-heading"><a href="{{ path('isl_lire_slug', {slug:article.slug}) }}">{{ article.titre }}</a></h3>
                         <p>Auteur {{ article.auteur }}</p>
                         {% if article.categories %}
                             {% for cat in article.categories %}
