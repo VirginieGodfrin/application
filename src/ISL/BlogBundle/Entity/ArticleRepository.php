@@ -102,4 +102,13 @@ class ArticleRepository extends EntityRepository
         
         return $query->getResult();
     }
+    
+    public function getArticleAvecCommentaires($id){
+        $qb = $this->createQueryBuilder('a');
+        $qb->join('a.commentaires', 'c');
+        $qb->addSelect('c');
+        $qb->where('a.id = :id');
+        $qb->setParameter('id', $id);
+        return $qb->getQuery()->getOneOrNullResult();
+    }
 }
