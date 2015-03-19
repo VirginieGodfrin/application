@@ -48,4 +48,33 @@ class ArticleRepository extends EntityRepository
         
         return $qb->getQuery()->getResult();
     }
+    
+    /**
+     * 
+     * @param \Doctrine\ORM\QueryBuilder $qb
+     * @return \Doctrine\ORM\QueryBuilder
+     * 
+     * filtre les résultats pour l'année en cours
+     */
+    public function whereAnneeEnCours(\Doctrine\ORM\QueryBuilder $qb){
+        $debut = new \DateTime(date('Y').'-01-01');
+        $fin = new \DateTime(date('Y').'-12-31');
+        
+        $qb->andWhere('a.date BETWEEN :debut AND :fin');
+        
+        $qb->setParameter('debut', $debut);
+        $qb->setParameter('fin', $fin);
+        
+        return $qb;
+    }
+    
+    
+    public function selectByAuteurPourAnneeEnCours($auteur){
+        $qb = $this->createQueryBuilder('a');
+        $qb->where('a.auteur = :auteur');
+        $qb->setParameter('auteur', $auteur);
+        
+        $qb = $this->whereAnneeEnCours($qb);
+        return $qb->getQuery()->getResult();
+    }
 }
