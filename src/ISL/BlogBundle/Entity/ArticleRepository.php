@@ -37,4 +37,15 @@ class ArticleRepository extends EntityRepository
             return null;
         }
     }
+    
+    
+    public function selectByAuteurOuTitre($auteur, $titre){
+        $qb = $this->createQueryBuilder('a');
+        $qb->where('a.auteur = :auteur');
+        $qb->orWhere('a.titre = :titre');
+        $qb->setParameter('auteur', $auteur);
+        $qb->setParameter('titre', $titre);
+        
+        return $qb->getQuery()->getResult();
+    }
 }
