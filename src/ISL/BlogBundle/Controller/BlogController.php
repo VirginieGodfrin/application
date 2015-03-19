@@ -23,12 +23,18 @@ use ISL\BlogBundle\Entity\Commentaire;
 class BlogController extends Controller{
     
     public function indexAction($page=''){
+        // récupération du repository défini comme un service
+        // voir ISL/BlogBundle/Resources/config/services.yml
+        // $repo = $this->get('article_repository');
         
+        // méthode traditionnelle pour récupérer le repository
+        /** @var  ISL\BlogBundle\Entity\ArticleRepository **/
         $repo = $this->getDoctrine()
                     ->getManager()
                     ->getRepository('ISLBlogBundle:Article');
-        // $repo = $this->get('article_repository');
-        $articles = $repo->findAll();
+        
+        $articles = $repo->selectAll();
+        
         
         return $this->render('ISLBlogBundle::index.html.twig',
                     array('articles'=>$articles)

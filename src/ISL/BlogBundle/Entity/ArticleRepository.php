@@ -12,4 +12,10 @@ use Doctrine\ORM\EntityRepository;
  */
 class ArticleRepository extends EntityRepository
 {
+    
+    public function selectAll(){
+        return $this->createQueryBuilder('a')
+                ->getQuery()
+                ->getResult();
+    }
 }
