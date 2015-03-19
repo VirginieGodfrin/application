@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\Table(name="blog_article")
  * @ORM\Entity(repositoryClass="ISL\BlogBundle\Entity\ArticleRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Article
 {
@@ -88,6 +89,14 @@ class Article
      * @ORM\OneToMany(targetEntity="Commentaire", mappedBy="article")
      */
     private $commentaires;
+    
+    
+    /**
+     *
+     * @var type \DateTime
+     * @ORM\Column(name="updated_at", type="datetime")
+     */
+    private $updatedAt;
 
 
     /**
@@ -247,7 +256,19 @@ class Article
         $this->commentaires->removeElement($comm);
     }
     
+    function getUpdatedAt() {
+        return $this->updatedAt;
+    }
 
+    function setUpdatedAt(type $updatedAt) {
+        $this->updatedAt = $updatedAt;
+    }
 
+    /**
+     * @ORM\PreUpdate
+     */
+    public function refreshUpdateDate(){
+        $this->setUpdatedAt(new \DateTime);
+    }
 
 }
