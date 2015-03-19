@@ -42,8 +42,15 @@ class BlogController extends Controller{
     }
     
     public function voirAction($id){
+        /** @var \ISL\BlogBundle\Entity\ArticleRepository **/
         $repo = $this->getDoctrine()->getManager()->getRepository('ISLBlogBundle:Article');
-        $article =  $repo->find($id);
+        
+        // utilisation de la méthode de base
+        //$article =  $repo->find($id);
+        
+        // utilisation de notre méthode custom
+        $article = $repo->selectOne($id);
+        
         if($article==null){
             throw $this->createNotFoundException("Pas d'article trouvé pour l'id ".$id);
         }

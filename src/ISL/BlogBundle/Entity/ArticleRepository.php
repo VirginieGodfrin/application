@@ -18,4 +18,23 @@ class ArticleRepository extends EntityRepository
                 ->getQuery()
                 ->getResult();
     }
+    
+    public function selectOne($id){
+        $qb = $this->createQueryBuilder('a');
+        
+        $qb->where('a.id = :id');
+        $qb->setParameter('id', $id);
+        
+        $res = $qb->getQuery()->getResult();
+        
+        if($res){
+            // si la requete renvoit des resultats, on prend le premier
+            // NB: d'autres méthodes existent $qb->getQuery()->getSingleResult()
+            // qui lance une exception si il y a plus d'un résultat
+            
+            return $res[0];
+        }else{
+            return null;
+        }
+    }
 }
