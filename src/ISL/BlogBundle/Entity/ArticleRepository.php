@@ -112,10 +112,24 @@ class ArticleRepository extends EntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
     
+
+    public function getAllWithCategorieAndImage(){
+        $qb = $this->createQueryBuilder('a');
+        
+        $qb->leftJoin('a.categories', 'c');
+        $qb->addSelect('c');
+        $qb->leftJoin('a.image', 'i');
+        $qb->addSelect('i');
+        
+        return $qb->getQuery()->getResult();
+    }
+
     public function getArticleAvecCommentairesEtCategories($id){
         $qb = $this->createQueryBuilder('a');
         $qb->leftJoin('a.commentaires', 'c');
         $qb->leftJoin('a.categories', 'cat');
+        $qb->leftJoin("a.image", 'i');
+        $qb->addSelect('i');
         $qb->addSelect('c');
         $qb->addSelect('cat');
         $qb->where('a.id = :id');

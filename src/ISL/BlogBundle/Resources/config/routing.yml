@@ -4,15 +4,16 @@ isl_blog_index:
     requirements:
         page: \d*
 
-isl_lire_slug:
-    path: /article/{slug}
-    defaults: { _controller: ISLBlogBundle:Blog:lire }
-    
 isl_blog_voir:
     path: /article/{id}
     defaults: { _controller: ISLBlogBundle:Blog:voir }
     requirements:
         id: \d+
+
+isl_lire_slug:
+    path: /article/{slug}
+    defaults: { _controller: ISLBlogBundle:Blog:lire }
+    
 
 isl_blog_modifier:
     path: /modifier/{id}

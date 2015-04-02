@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use ISL\BlogBundle\Entity\Article;
 use ISL\BlogBundle\Entity\Commentaire;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
 /**
@@ -33,23 +35,21 @@ class BlogController extends Controller{
                     ->getManager()
                     ->getRepository('ISLBlogBundle:Article');
         
-        $articles = $repo->selectAll();
+        //$articles = $repo->getAllWithCategorieAndImage();
+        $articles = $repo->findAll();
         
         
         return $this->render('ISLBlogBundle::index.html.twig',
                     array('articles'=>$articles)
                 );
     }
-    
-    public function voirAction($id){
+    /**
+     * @Route("/blog/id/{id}")
+     * @ParamConverter("article", class="ISLBlogBundle:Article", options={"repository_method"="getArticleAvecCommentairesEtCategories"})
+     * 
+     */
+    public function voirAction(Article $article){
         /** @var \ISL\BlogBundle\Entity\ArticleRepository **/
-        $repo = $this->getDoctrine()->getManager()->getRepository('ISLBlogBundle:Article');
-        
-        // utilisation de la méthode de base
-        //$article =  $repo->find($id);
-        
-        // utilisation de notre méthode custom
-        $article = $repo->selectOne($id);
         
         if($article==null){
             throw $this->createNotFoundException("Pas d'article trouvé pour l'id ".$id);
@@ -71,29 +71,25 @@ class BlogController extends Controller{
     }
     
     public function ajouterAction(Request $req){
-       
+      $article = new Article();
+      $formBuilder = $this->createFormBuilder($article);
+      $formBuilder->add('auteur')
+                ->add('titre')
+                ->add('contenu')
+                ->add('date')
+                ->add('publication');
+      $form = $formBuilder->getForm();
       
-       $article = new Article();
-        $article->setAuteur('Greg Berger');
-        $article->setTitre('Article test slug');
-        $article->setContenu("test de l'extension sluggable");
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($article);
-        $em->flush();
-        $repo = $em->getRepository('ISLBlogBundle:Competence');
-        $competences = $repo->findAll();
-        foreach ($competences as $comp) {
-            //$article->addCategorie($categorie);
-            $compArt = new \ISL\BlogBundle\Entity\ArticleCompetence();
-            $compArt->setArticle($article);
-            $compArt->setCompetence($comp);
-            $compArt->setNiveau('expert absolu');
-            $em->persist($compArt);
-            
-        }        
-        
-        $em->flush();
-        return $this->render('ISLBlogBundle:Blog:ajouter.html.twig');
+      $form->handleRequest($req);
+      
+      if($form->isValid()){
+          $em = $this->getDoctrine()->getManager();
+          $em->persist($article);
+          $em->flush();
+          return $this->redirect($this->generateUrl('isl_lire_slug', array('slug'=>$article->getSlug())));
+      }
+      
+      return $this->render('ISLBlogBundle:Blog:ajouter.html.twig', array('form'=>$form->createView()));
         
         
     }

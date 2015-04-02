@@ -3,13 +3,21 @@
 {% block contenu %}
     <article>
         <h1>{{ article.titre }}</h1>
+        
         <h3> Par {{ article.auteur}}, le {{ article.date | date('d/m/Y') }}</h3>
+        <div class="categories">
+            {% for cat in article.categories %}
+                <span class="label label-info">{{ cat.nom }}</span>
+            {% endfor %}
+        </div>
         {% if article.image %}
             <p>
                 <image src="{{ article.image.url }}" alt="{{ article.image.alt }}" />
             <p>
         {% endif %}
         <p class="">{{ article.contenu }}</p>
+        
+      
         
     </article>
         
