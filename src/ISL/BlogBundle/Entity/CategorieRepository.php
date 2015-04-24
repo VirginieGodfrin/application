@@ -12,4 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class CategorieRepository extends EntityRepository
 {
+    
+    public function getCategoriesFiltrees(){
+        $qb = $this->createQueryBuilder('cat');
+        $qb->addSelect('cat');
+        $qb->orderBy('cat.nom', 'ASC');
+        
+        return $qb;
+    }
 }

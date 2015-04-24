@@ -5,6 +5,10 @@ namespace ISL\BlogBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use ISL\BlogBundle\Validator\MotsInterdits;
+    
 
 /**
  * Article
@@ -22,6 +26,7 @@ class Article
         $this->publication = true;
         $this->categories = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
+        
     }
     /**
      * @var integer
@@ -49,6 +54,7 @@ class Article
     /**
      * @var string
      *
+     * @Assert\Length(min=5, minMessage="Le nom de l'auteur doit comporter minimum {{ limit }} caractères")
      * @ORM\Column(name="auteur", type="string", length=255)
      */
     private $auteur;
@@ -57,6 +63,7 @@ class Article
      * @var string
      *
      * @ORM\Column(name="contenu", type="text")
+     * @MotsInterdits(message="non!!")
      */
     private $contenu;
     
@@ -214,7 +221,7 @@ class Article
         return $this->publication;
     }
 
-    function setPublication(type $publication) {
+    function setPublication($publication) {
         $this->publication = $publication;
     }
     
@@ -289,4 +296,5 @@ class Article
     function setSlug(type $slug) {
         $this->slug = $slug;
     }
+   
 }

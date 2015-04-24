@@ -1,0 +1,23 @@
+{% extends 'ISLBlogBundle::layout.html.twig' %}
+
+{% block titre %}
+    Ajouter un article
+{% endblock %} 
+
+{% block contenu %}
+    <h1>Ajouter un article</h1>
+    <div class="col-md-6">
+    {{ form_start(form, {attr:{class:"form-horizontal", 'novalidate':'novalidate'}}) }} 
+        <div class="form-group">
+            {{ form_errors(form) }}
+            {{ form_row(form.auteur, {attr:{class:"form-control"}}) }}
+            {{ form_row(form.titre, {attr:{class:"form-control"}}) }}
+            
+            {{ form_row(form.contenu, {attr:{class:"form-control"}}) }}
+
+            {{ form_rest(form) }}
+            {# <input type="submit" class="btn btn-primary" /> #}
+        </div>
+    {{ form_end(form) }}
+    </div>
+{% endblock %}

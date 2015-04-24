@@ -52,7 +52,7 @@ class BlogController extends Controller{
         /** @var \ISL\BlogBundle\Entity\ArticleRepository **/
         
         if($article==null){
-            throw $this->createNotFoundException("Pas d'article trouvé pour l'id ".$id);
+            throw $this->createNotFoundException("Pas d'article trouvé pour l'id ".$article->getId());
         }
         return $this->render('ISLBlogBundle:Blog:voir.html.twig', 
                     array('article' => $article)
@@ -72,33 +72,88 @@ class BlogController extends Controller{
     
     public function ajouterAction(Request $req){
       $article = new Article();
+      /*
       $formBuilder = $this->createFormBuilder($article);
       $formBuilder->add('auteur')
                 ->add('titre')
                 ->add('contenu')
                 ->add('date')
-                ->add('publication');
+                ->add('publication', 'checkbox', array('required'=>false));
       $form = $formBuilder->getForm();
-      
+      */
+      $form = $this->createForm(new \ISL\BlogBundle\Form\ArticleType(), $article);
       $form->handleRequest($req);
       
       if($form->isValid()){
           $em = $this->getDoctrine()->getManager();
           $em->persist($article);
           $em->flush();
-          return $this->redirect($this->generateUrl('isl_lire_slug', array('slug'=>$article->getSlug())));
+          return $this->redirect(
+                  $this->generateUrl('isl_lire_slug', 
+                          array('slug'=>$article->getSlug()))
+                  );
       }
       
-      return $this->render('ISLBlogBundle:Blog:ajouter.html.twig', array('form'=>$form->createView()));
+      return $this->render(
+              'ISLBlogBundle:Blog:ajouter.html_1.twig', 
+              array('form'=>$form->createView())
+            );
         
         
     }
     
-    public function modifierAction($id, Request $req){
-        return $this->render('ISLBlogBundle:Blog:modifier.html.twig');
+    public function modifierAction(Article $article){
+        $form = $this->createForm(
+                new \ISL\BlogBundle\Form\ArticleModificationType(), 
+                $article
+               );
+        
+        $form_supprimer = $this->createDeleteForm($article->getId());
+        
+        $request = $this->get('request');
+        $form->handleRequest($request);
+        
+        if($form->isValid()){
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($article);
+            $em->flush();
+            return $this->redirect(
+                    $this->generateUrl('isl_lire_slug', 
+                            array('slug'=>$article->getSlug())
+                            )
+                    );
+        }
+        return $this->render('ISLBlogBundle:Blog:modifier.html.twig', 
+                array('form'=>$form->createView(),
+                      'form_supprimer' => $form_supprimer->createView()
+                    )
+                );
     }
    
-    public function supprimerAction($id){
+    public function supprimerAction(Article $article){
+        $form = $this->createDeleteForm($article->getId());
+        $form->handleRequest($this->get('request'));
+        if($form->isValid()){
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($article);
+            $em->flush();
+            
+            $this->get('session')->getFlashBag()->add('success','Article a été supprimé');
+            
+        }
+        return $this->redirect($this->generateUrl('isl_blog_index'));
+    }
+    
+    private function createDeleteForm($id){
+        return $this->createFormBuilder()
+                ->setAction(
+                    $this->generateUrl('isl_blog_supprimer', 
+                                        array('id'=>$id)
+                                      )
+                    )
+                ->setMethod('DELETE')
+                ->add('submit', 'submit', array('label'=>'Delete'))
+                ->getForm();
         
     }
     

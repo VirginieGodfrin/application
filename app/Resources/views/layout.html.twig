@@ -9,18 +9,24 @@
         {%endblock %}
     </head>
     <body>
+        
         <div class="container">
             {% block header %}
             <header class="page-header">
                 {# ajout d'un lien vers la home page dans le h1 à l'aide de la fonction path() #}
                 <h1><a href="{{ path('isl_blog_index') }}">Le blog de l'ISL</a></h1>
             </header>
+            <div class="flashbags">
+                {% for flashMessage in app.session.flashbag.get('success') %}
+                    <p class="alert alert-success">{{ flashMessage }}</p>
+                {% endfor %}
+            </div>
             {% endblock %}
             {% block contenu %}
                 contenu par défaut
             {% endblock %}
             {% block footer %}
-                <footer>footer</footer>
+                <footer class="footer" data-spy="affix" data-offset-bottom="30"></footer>
             {% endblock %}
         </div>
     </body>
